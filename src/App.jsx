@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "./utility/utility";
 import Comments from "./components/Comments";
 import Create from "./components/Create";
+import { styled } from "styled-components";
+
+/***************** STYLES ******************/
+const AppStyles = styled.main`
+  padding: 4rem 2rem;
+`;
+
+/***************** COMPONENT ******************/
 
 function App() {
   const url = "/src/data.json";
@@ -21,10 +29,10 @@ function App() {
     fetchDataAsync(url);
   }, []);
   return (
-    <main>
+    <AppStyles>
       <Comments comments={comments} />
-      <Create currentUser={currentUser}/>
-    </main>
+      <Create currentUser={currentUser} />
+    </AppStyles>
   );
 }
 
