@@ -13,11 +13,9 @@
 }
 
 body {
+  min-height: 100vh;
   font-size: 16px;
   font-family: "Rubik", sans-serif;
-}
-
-footer {
 }
 
 .attribution {
