@@ -13,13 +13,20 @@ const Reply = ({ item }) => {
   const { id, content, createdAt, score, replyingTo, user } = item;
   return (
     <ReplyStyles>
-      <p>{id}</p>
-      <p>{content}</p>
-      <p>{createdAt}</p>
-      <p>{score}</p>
-      <p>{replyingTo}</p>
-      <p>{user.image.png}</p>
-      <p>{user.username}</p>
+      <div>
+        <input type="image" src="/assets/images/icon-plus.svg" />
+        {score}
+        <input type="image" src="/assets/images/icon-minus.svg" />
+      </div>
+      <div>
+        <img src={user.image.png} alt="avatar" />
+        <p>{user.username}</p>
+        <p>{createdAt}</p>
+      </div>
+      <div>
+        <p>{replyingTo}</p>
+        <p>{content}</p>
+      </div>
     </ReplyStyles>
   );
 };

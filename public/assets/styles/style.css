@@ -12,10 +12,15 @@
   --white: hsl(0, 0%, 100%);
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   min-height: 100vh;
   font-size: 16px;
   font-family: "Rubik", sans-serif;
+  background-color: var(--very-light-gray);
 }
 
 .attribution {

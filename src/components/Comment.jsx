@@ -13,13 +13,24 @@ const Comment = ({ item }) => {
   const { id, content, createdAt, score, replyingTo, user, replies } = item;
   return (
     <CommentStyles>
-      <p>{id}</p>
+      <div>
+        <input type="image" src="/assets/images/icon-plus.svg" />
+        {score}
+        <input type="image" src="/assets/images/icon-minus.svg" />
+      </div>
+      <div>
+        <div>
+          <img src={user.image.png} alt="avatar" />
+          <p>{user.username}</p>
+          <p>{createdAt}</p>
+        </div>
+        <div>
+          <input type="image" src="/assets/images/icon-reply.svg" />
+          <p>Reply</p>
+        </div>
+      </div>
+
       <p>{content}</p>
-      <p>{createdAt}</p>
-      <p>{score}</p>
-      <p>{replyingTo}</p>
-      <p>{user.image.png}</p>
-      <p>{user.username}</p>
       <Replies replies={replies} />
     </CommentStyles>
   );
