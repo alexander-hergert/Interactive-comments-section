@@ -4,9 +4,9 @@ import { styled } from "styled-components";
 
 /***************** STYLES ******************/
 const RepliesStyles = styled.section`
-  margin-left: 2.5rem;
-  border-left: 1px solid gray;
-  padding-left: 2.5rem;
+  //margin-left: 2.5rem;
+  border-left: 1px solid hsl(239, 57%, 85%);
+  padding-left: 1rem;
 `;
 /***************** COMPONENT ******************/
 const Replies = ({ replies }) => {

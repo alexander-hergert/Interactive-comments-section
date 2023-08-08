@@ -7,9 +7,6 @@ const ReplyStyles = styled.div`
   padding: 2rem;
   background-color: white;
   border-radius: 5px;
-  div {
-    border: 1px solid black;
-  }
   display: grid;
   grid-template:
     "name name"
@@ -18,17 +15,47 @@ const ReplyStyles = styled.div`
   .vote {
     grid-area: vote;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: hsl(223, 19%, 93%);
+    border-radius: 5px;
+    margin: 0.5rem;
+    margin-left: 0;
+    width: 6rem;
+    color: hsl(238, 40%, 52%);
+    font-weight: bold;
   }
   .name {
     grid-area: name;
     display: flex;
+    align-items: center;
+    gap: 1rem;
+    img {
+      width: 2rem;
+    }
+    p:first-of-type {
+      font-weight: bold;
+    }
+    p:last-of-type {
+      color: hsl(211, 10%, 45%);
+    }
   }
   .action {
     grid-area: action;
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    color: hsl(238, 40%, 52%);
+    font-weight: bold;
   }
   .text {
     grid-area: text;
+    p {
+      color: hsl(211, 10%, 45%);
+      line-height: 1.5;
+    }
   }
 
   //DESKTOP

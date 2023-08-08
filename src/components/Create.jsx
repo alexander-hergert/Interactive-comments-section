@@ -14,6 +14,7 @@ const CreateStyles = styled.div`
 
   img {
     grid-area: image;
+    width: 2rem;
   }
 
   textarea {
@@ -23,12 +24,13 @@ const CreateStyles = styled.div`
   }
 
   button {
-    padding: 1rem 2rem;
+    width: 6rem;
     background-color: hsl(238, 40%, 52%);
     color: white;
     border: none;
     border-radius: 5px;
     grid-area: button;
+
   }
 
   //DESKTOP
