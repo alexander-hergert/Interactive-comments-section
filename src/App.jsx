@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import { fetchData } from "./utility/utility";
 import Comments from "./components/Comments";
 import Create from "./components/Create";
 import { styled } from "styled-components";
+import reducer from "./reducer";
 
 /***************** STYLES ******************/
 const AppStyles = styled.main`
@@ -12,26 +13,25 @@ const AppStyles = styled.main`
 /***************** COMPONENT ******************/
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, {});
   const url = "/src/data.json";
-  const [currentUser, setCurrentUser] = useState({});
-  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchDataAsync = async (url) => {
       try {
         const data = await fetchData(url);
-        setCurrentUser(data.currentUser);
-        setComments(data.comments);
+        dispatch({ type: "RENDER", payload: data });
       } catch (error) {
         console.log("Error fetching data:", error.message);
       }
     };
     fetchDataAsync(url);
   }, []);
+
   return (
     <AppStyles>
-      <Comments comments={comments} />
-      <Create currentUser={currentUser} />
+      <Comments state={state} />
+      <Create state={state} dispatch={dispatch} />
     </AppStyles>
   );
 }

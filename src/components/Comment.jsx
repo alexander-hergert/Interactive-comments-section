@@ -1,6 +1,7 @@
 import React from "react";
 import Replies from "./Replies";
 import { styled } from "styled-components";
+import { getPostingTime } from "../utility/utility";
 
 /***************** STYLES ******************/
 const CommentStyles = styled.section`
@@ -85,7 +86,7 @@ const Comment = ({ item }) => {
         <div className="name">
           <img src={user.image.png} alt="avatar" />
           <p>{user.username}</p>
-          <p>{createdAt}</p>
+          <p>{getPostingTime(createdAt)}</p>
         </div>
         <div className="action">
           <input type="image" src="/assets/images/icon-reply.svg" />

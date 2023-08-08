@@ -9,10 +9,10 @@ const CommentsStyles = styled.section`
 
 /***************** COMPONENT ******************/
 
-const Comments = ({ comments }) => {
+const Comments = ({ state }) => {
   return (
     <CommentsStyles>
-      {comments.map((item) => (
+      {state?.comments?.map((item) => (
         <Comment key={item.id} item={item} />
       ))}
     </CommentsStyles>

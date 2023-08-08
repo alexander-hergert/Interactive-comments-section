@@ -1,5 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
+import { nanoid } from "nanoid";
 
 /***************** STYLES ******************/
 const CreateStyles = styled.div`
@@ -30,7 +31,6 @@ const CreateStyles = styled.div`
     border: none;
     border-radius: 5px;
     grid-area: button;
-
   }
 
   //DESKTOP
@@ -43,19 +43,47 @@ const CreateStyles = styled.div`
 
 /***************** COMPONENT ******************/
 
-const Create = ({ currentUser }) => {
+const Create = ({ state, dispatch }) => {
+  const handleCreateComment = (e) => {
+    e.preventDefault();
+    //creating the payload
+    const userName = state.currentUser.username;
+    const imageSrc = state.currentUser.image.png;
+    const newId = nanoid();
+    const newDate = new Date().getTime();
+    console.log(newDate);
+    const newCommentText = e.target[0].value;
+    const newComment = {
+      id: newId,
+      content: newCommentText,
+      createdAt: newDate,
+      score: 0,
+      user: {
+        image: {
+          png: imageSrc,
+          webp: "/assets/images/avatars/image-amyrobson.webp",
+        },
+        username: userName,
+      },
+      replies: [],
+    };
+    dispatch({ type: "NEW COMMENT", payload: newComment });
+  };
+
   return (
     <CreateStyles>
-      <img src={currentUser.image?.png} alt="avatar" />
-      <textarea
-        name="new comment"
-        id="new comment"
-        cols="30"
-        rows="10"
-        placeholder="Add a comment..."
-        aria-label="new comment"
-      ></textarea>
-      <button>SEND</button>
+      <form onSubmit={handleCreateComment}>
+        <img src={state?.currentUser?.image?.png} alt="avatar" />
+        <textarea
+          name="new comment"
+          id="new comment"
+          cols="30"
+          rows="10"
+          placeholder="Add a comment..."
+          aria-label="new comment"
+        ></textarea>
+        <button>SEND</button>
+      </form>
     </CreateStyles>
   );
 };
