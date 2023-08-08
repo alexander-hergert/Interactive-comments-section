@@ -1,6 +1,7 @@
 import React from "react";
 import Comment from "./Comment";
 import { styled } from "styled-components";
+import { useGlobalContext } from "../context";
 
 /***************** STYLES ******************/
 const CommentsStyles = styled.section`
@@ -9,7 +10,8 @@ const CommentsStyles = styled.section`
 
 /***************** COMPONENT ******************/
 
-const Comments = ({ state }) => {
+const Comments = () => {
+  const { state } = useGlobalContext();
   return (
     <CommentsStyles>
       {state?.comments?.map((item) => (

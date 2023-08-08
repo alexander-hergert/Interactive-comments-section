@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Replies from "./Replies";
 import { styled } from "styled-components";
 import { getPostingTime } from "../utility/utility";
+import Create from "./CreateNewComment";
 
 /***************** STYLES ******************/
 const CommentStyles = styled.section`
@@ -75,6 +76,10 @@ const CommentStyles = styled.section`
 
 const Comment = ({ item }) => {
   const { id, content, createdAt, score, replyingTo, user, replies } = item;
+  const [isReply, setIsReply] = useState(false);
+
+  const handleReply = () => {};
+
   return (
     <>
       <CommentStyles>
@@ -89,7 +94,11 @@ const Comment = ({ item }) => {
           <p>{getPostingTime(createdAt)}</p>
         </div>
         <div className="action">
-          <input type="image" src="/assets/images/icon-reply.svg" />
+          <input
+            type="image"
+            src="/assets/images/icon-reply.svg"
+            onClick={handleReply}
+          />
           <p>Reply</p>
         </div>
         <div className="text">

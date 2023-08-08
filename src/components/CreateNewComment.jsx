@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 import { nanoid } from "nanoid";
+import { useGlobalContext } from "../context";
 
 /***************** STYLES ******************/
 const CreateStyles = styled.div`
@@ -43,7 +44,8 @@ const CreateStyles = styled.div`
 
 /***************** COMPONENT ******************/
 
-const Create = ({ state, dispatch }) => {
+const CreateNewComment = () => {
+  const { state, dispatch } = useGlobalContext();
   const handleCreateComment = (e) => {
     e.preventDefault();
     //creating the payload
@@ -88,4 +90,4 @@ const Create = ({ state, dispatch }) => {
   );
 };
 
-export default Create;
+export default CreateNewComment;

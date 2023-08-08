@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect } from "react";
 import { fetchData } from "./utility/utility";
 import Comments from "./components/Comments";
-import Create from "./components/Create";
+import CreateNewComment from "./components/CreateNewComment";
 import { styled } from "styled-components";
-import reducer from "./reducer";
+import { useGlobalContext } from "./context";
 
 /***************** STYLES ******************/
 const AppStyles = styled.main`
@@ -13,7 +13,7 @@ const AppStyles = styled.main`
 /***************** COMPONENT ******************/
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, {});
+  const { dispatch } = useGlobalContext();
   const url = "/src/data.json";
 
   useEffect(() => {
@@ -30,8 +30,8 @@ function App() {
 
   return (
     <AppStyles>
-      <Comments state={state} />
-      <Create state={state} dispatch={dispatch} />
+      <Comments />
+      <CreateNewComment />
     </AppStyles>
   );
 }

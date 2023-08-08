@@ -1,4 +1,4 @@
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
   switch (action.type) {
     case "RENDER":
       return action.payload;
@@ -10,6 +10,9 @@ const reducer = (state, action) => {
         comments: newComments,
       };
       return newState;
+    case "REPLY SEND":
+      console.log(state);
+      return state;
     default:
       throw new Error("Unsupported action type");
   }
