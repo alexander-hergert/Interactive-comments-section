@@ -53,7 +53,6 @@ const CreateNewComment = () => {
     const imageSrc = state.currentUser.image.png;
     const newId = nanoid();
     const newDate = new Date().getTime();
-    console.log(newDate);
     const newCommentText = e.target[0].value;
     const newComment = {
       id: newId,

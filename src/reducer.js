@@ -5,14 +5,25 @@ export const reducer = (state, action) => {
     case "NEW COMMENT":
       const newComment = action.payload;
       const newComments = [...state.comments, newComment];
-      const newState = {
+      return {
         ...state,
         comments: newComments,
       };
-      return newState;
-    case "REPLY SEND":
-      console.log(state);
-      return state;
+    case "NEW REPLY":
+      const { commentId, newReply } = action.payload;
+      const updatedComments = state.comments.map((comment) => {
+        if (comment.id === commentId) {
+          return {
+            ...comment,
+            replies: [...comment.replies, newReply],
+          };
+        }
+        return comment;
+      });
+      return {
+        ...state,
+        comments: updatedComments,
+      };
     default:
       throw new Error("Unsupported action type");
   }

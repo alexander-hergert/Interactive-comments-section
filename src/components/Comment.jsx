@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Replies from "./Replies";
 import { styled } from "styled-components";
 import { getPostingTime } from "../utility/utility";
-import Create from "./CreateNewComment";
+import ReplyForm from "./ReplyForm";
 
 /***************** STYLES ******************/
 const CommentStyles = styled.section`
@@ -78,7 +78,9 @@ const Comment = ({ item }) => {
   const { id, content, createdAt, score, replyingTo, user, replies } = item;
   const [isReply, setIsReply] = useState(false);
 
-  const handleReply = () => {};
+  const handleToggle = () => {
+    setIsReply(!isReply);
+  };
 
   return (
     <>
@@ -97,7 +99,7 @@ const Comment = ({ item }) => {
           <input
             type="image"
             src="/assets/images/icon-reply.svg"
-            onClick={handleReply}
+            onClick={handleToggle}
           />
           <p>Reply</p>
         </div>
@@ -105,6 +107,7 @@ const Comment = ({ item }) => {
           <p>{content}</p>
         </div>
       </CommentStyles>
+      {isReply && <ReplyForm commentId={id}/>}
       <Replies replies={replies} />
     </>
   );
