@@ -107,7 +107,7 @@ const Comment = ({ item }) => {
           <p>{content}</p>
         </div>
       </CommentStyles>
-      {isReply && <ReplyForm commentId={id}/>}
+      {isReply && <ReplyForm commentId={id} handleToggle={handleToggle}/>}
       <Replies replies={replies} />
     </>
   );

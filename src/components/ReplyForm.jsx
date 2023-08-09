@@ -44,7 +44,7 @@ const CreateStyles = styled.div`
 
 /***************** COMPONENT ******************/
 
-const ReplyForm = ({ commentId }) => {
+const ReplyForm = ({ commentId, handleToggle }) => {
   const { state, dispatch } = useGlobalContext();
   const handleReply = (e) => {
     e.preventDefault();
@@ -71,8 +71,19 @@ const ReplyForm = ({ commentId }) => {
         username: userName,
       },
     };
+    const replyId = commentId;
+    const newItem = newReply;
 
-    dispatch({ type: "NEW REPLY", payload: { commentId, newReply } });
+    const isReply = state.comments.some((comment) => {
+      return comment.replies.some((reply) => reply.id === commentId);
+    });
+
+    if (isReply) {
+      dispatch({ type: "REPLY ON REPLY", payload: { replyId, newItem } });
+    } else {
+      dispatch({ type: "REPLY ON COMMENT", payload: { commentId, newReply } });
+    }
+    handleToggle(false);
   };
 
   return (

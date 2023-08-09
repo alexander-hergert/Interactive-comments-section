@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
+import ReplyForm from "./ReplyForm";
 
 /***************** STYLES ******************/
 const ReplyStyles = styled.div`
@@ -72,30 +73,42 @@ const ReplyStyles = styled.div`
 /***************** COMPONENT ******************/
 
 const Reply = ({ item }) => {
+  const [isReply, setIsReply] = useState(false);
+
+  const handleToggle = () => {
+    setIsReply(!isReply);
+  };
   const { id, content, createdAt, score, replyingTo, user } = item;
   return (
-    <ReplyStyles>
-      <div className="vote">
-        <input type="image" src="/assets/images/icon-plus.svg" />
-        {score}
-        <input type="image" src="/assets/images/icon-minus.svg" />
-      </div>
-      <div className="name">
-        <img src={user.image.png} alt="avatar" />
-        <p>{user.username}</p>
-        <p>{createdAt}</p>
-      </div>
-      <div className="action">
-        <input type="image" src="/assets/images/icon-reply.svg" />
-        <p>Reply</p>
-      </div>
-      <div className="text">
-        <p>
-          {replyingTo}
-          {content}
-        </p>
-      </div>
-    </ReplyStyles>
+    <>
+      <ReplyStyles>
+        <div className="vote">
+          <input type="image" src="/assets/images/icon-plus.svg" />
+          {score}
+          <input type="image" src="/assets/images/icon-minus.svg" />
+        </div>
+        <div className="name">
+          <img src={user.image.png} alt="avatar" />
+          <p>{user.username}</p>
+          <p>{createdAt}</p>
+        </div>
+        <div className="action">
+          <input
+            type="image"
+            src="/assets/images/icon-reply.svg"
+            onClick={handleToggle}
+          />
+          <p>Reply</p>
+        </div>
+        <div className="text">
+          <p>
+            {replyingTo}
+            {content}
+          </p>
+        </div>
+      </ReplyStyles>
+      {isReply && <ReplyForm commentId={id} handleToggle={handleToggle} />}
+    </>
   );
 };
 
