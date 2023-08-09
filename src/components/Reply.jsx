@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import ReplyForm from "./ReplyForm";
 import { useGlobalContext } from "../context";
+import Modal from "./Modal";
 
 /***************** STYLES ******************/
 const ReplyStyles = styled.div`
@@ -80,6 +81,7 @@ const Reply = ({ item }) => {
   const [isUser, setIsUser] = useState(null); //true/false
   const [isEdit, setIsEdit] = useState(false);
   const [textContent, setTextContent] = useState(content);
+  const [isDelete, setIsDelete] = useState(false);
 
   useEffect(() => {
     //check if currentUser is owner of comment
@@ -127,8 +129,13 @@ const Reply = ({ item }) => {
     }
   };
 
+  const handleDelete = () => {
+    setIsDelete(!isDelete);
+  };
+
   return (
     <>
+      {isDelete && <Modal setIsDelete={setIsDelete} id={id} />}
       <ReplyStyles>
         <div className="vote">
           <input
@@ -151,7 +158,11 @@ const Reply = ({ item }) => {
         </div>
         {isUser ? (
           <div className="action">
-            <input type="image" src="/assets/images/icon-delete.svg" />
+            <input
+              type="image"
+              src="/assets/images/icon-delete.svg"
+              onClick={handleDelete}
+            />
             <p>Delete</p>
             <input
               type="image"

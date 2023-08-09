@@ -170,6 +170,24 @@ export const reducer = (state, action) => {
         ...state,
         comments: newEditComments,
       };
+    case "ON DELETE":
+      const { deleteId } = action.payload;
+      //logic for delete
+      const newDeleteComments = state.comments
+        .map((comment) => ({
+          ...comment,
+          replies: comment.replies.filter((reply) => deleteId !== reply.id),
+        }))
+        .filter((comment) => deleteId !== comment.id);//todo parent not working
+
+      console.log({
+        ...state,
+        comments: newDeleteComments,
+      });
+      return {
+        ...state,
+        comments: newDeleteComments,
+      };
     default:
       throw new Error("Unsupported action type");
   }
