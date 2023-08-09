@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Replies from "./Replies";
 import { styled } from "styled-components";
 import { getPostingTime } from "../utility/utility";
@@ -77,8 +77,13 @@ const CommentStyles = styled.section`
 
 const Comment = ({ item }) => {
   const { id, content, createdAt, score, replyingTo, user, replies } = item;
+  //use user values to check if the currentuser is the user
   const [isReply, setIsReply] = useState(false);
   const { state, dispatch } = useGlobalContext();
+  const [isUser, setIsUser] = useState(true);
+
+  //need an effect to setIsUser dependent on currentUser
+  //useEffect = (() => {}, []); //dependency could be state)
 
   const handleToggle = () => {
     setIsReply(!isReply);
@@ -119,16 +124,26 @@ const Comment = ({ item }) => {
         <div className="name">
           <img src={user.image.png} alt="avatar" />
           <p>{user.username}</p>
+          {isUser && <p>you</p>}
           <p>{getPostingTime(createdAt)}</p>
         </div>
-        <div className="action">
-          <input
-            type="image"
-            src="/assets/images/icon-reply.svg"
-            onClick={handleToggle}
-          />
-          <p>Reply</p>
-        </div>
+        {isUser ? (
+          <div className="action">
+            <input type="image" src="/assets/images/icon-delete.svg" />
+            <p>Delete</p>
+            <input type="image" src="/assets/images/icon-edit.svg" />
+            <p>Edit</p>
+          </div>
+        ) : (
+          <div className="action">
+            <input
+              type="image"
+              src="/assets/images/icon-reply.svg"
+              onClick={handleToggle}
+            />
+            <p>Reply</p>
+          </div>
+        )}
         <div className="text">
           <p>{content}</p>
         </div>

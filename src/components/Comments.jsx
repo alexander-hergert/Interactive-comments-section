@@ -12,6 +12,7 @@ const CommentsStyles = styled.section`
 
 const Comments = () => {
   const { state } = useGlobalContext();
+
   return (
     <CommentsStyles>
       {state?.comments?.map((item) => (
