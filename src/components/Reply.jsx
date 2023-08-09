@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import ReplyForm from "./ReplyForm";
 import { useGlobalContext } from "../context";
@@ -77,6 +77,16 @@ const Reply = ({ item }) => {
   const { id, content, createdAt, score, replyingTo, user } = item;
   const [isReply, setIsReply] = useState(false);
   const { state, dispatch } = useGlobalContext();
+  const [isUser, setIsUser] = useState(null); //true/false
+
+  useEffect(() => {
+    //check if currentUser is owner of comment
+    if (state.currentUser.username === user.username) {
+      setIsUser(true);
+    } else {
+      setIsUser(false);
+    }
+  }, []);
 
   const handleToggle = () => {
     setIsReply(!isReply);
@@ -96,23 +106,41 @@ const Reply = ({ item }) => {
     <>
       <ReplyStyles>
         <div className="vote">
-          <input type="image" src="/assets/images/icon-plus.svg" onClick={handleUpvote}/>
+          <input
+            type="image"
+            src="/assets/images/icon-plus.svg"
+            onClick={handleUpvote}
+          />
           {score}
-          <input type="image" src="/assets/images/icon-minus.svg" onClick={handleDownvote}/>
+          <input
+            type="image"
+            src="/assets/images/icon-minus.svg"
+            onClick={handleDownvote}
+          />
         </div>
         <div className="name">
           <img src={user.image.png} alt="avatar" />
           <p>{user.username}</p>
+          {isUser && <p>you</p>}
           <p>{createdAt}</p>
         </div>
-        <div className="action">
-          <input
-            type="image"
-            src="/assets/images/icon-reply.svg"
-            onClick={handleToggle}
-          />
-          <p>Reply</p>
-        </div>
+        {isUser ? (
+          <div className="action">
+            <input type="image" src="/assets/images/icon-delete.svg" />
+            <p>Delete</p>
+            <input type="image" src="/assets/images/icon-edit.svg" />
+            <p>Edit</p>
+          </div>
+        ) : (
+          <div className="action">
+            <input
+              type="image"
+              src="/assets/images/icon-reply.svg"
+              onClick={handleToggle}
+            />
+            <p>Reply</p>
+          </div>
+        )}
         <div className="text">
           <p>
             {replyingTo}
