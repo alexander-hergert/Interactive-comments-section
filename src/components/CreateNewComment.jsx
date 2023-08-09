@@ -59,6 +59,8 @@ const CreateNewComment = () => {
       content: newCommentText,
       createdAt: newDate,
       score: 0,
+      upvotedBy: [],
+      downvotedBy: [],
       user: {
         image: {
           png: imageSrc,

@@ -62,6 +62,8 @@ const ReplyForm = ({ commentId, handleToggle }) => {
       content: newContent,
       createdAt: newDate,
       score: newScore,
+      upvotedBy: [],
+      downvotedBy: [],
       replyingTo: replyingTo,
       user: {
         image: {

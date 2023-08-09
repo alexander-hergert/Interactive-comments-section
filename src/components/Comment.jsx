@@ -3,6 +3,7 @@ import Replies from "./Replies";
 import { styled } from "styled-components";
 import { getPostingTime } from "../utility/utility";
 import ReplyForm from "./ReplyForm";
+import { useGlobalContext } from "../context";
 
 /***************** STYLES ******************/
 const CommentStyles = styled.section`
@@ -77,18 +78,43 @@ const CommentStyles = styled.section`
 const Comment = ({ item }) => {
   const { id, content, createdAt, score, replyingTo, user, replies } = item;
   const [isReply, setIsReply] = useState(false);
+  const { state, dispatch } = useGlobalContext();
 
   const handleToggle = () => {
     setIsReply(!isReply);
+  };
+
+  const handleUpvote = () => {
+    const upvoteId = id;
+    dispatch({
+      type: "UPVOTE A COMMENT",
+      payload: { upvoteId, currentUserName: state.currentUser.username },
+    });
+  };
+
+  const handleDownvote = () => {
+    const downvoteId = id;
+    dispatch({
+      type: "DOWNVOTE A COMMENT",
+      payload: { downvoteId, currentUserName: state.currentUser.username },
+    });
   };
 
   return (
     <>
       <CommentStyles>
         <div className="vote">
-          <input type="image" src="/assets/images/icon-plus.svg" />
+          <input
+            type="image"
+            src="/assets/images/icon-plus.svg"
+            onClick={handleUpvote}
+          />
           {score}
-          <input type="image" src="/assets/images/icon-minus.svg" />
+          <input
+            type="image"
+            src="/assets/images/icon-minus.svg"
+            onClick={handleDownvote}
+          />
         </div>
         <div className="name">
           <img src={user.image.png} alt="avatar" />
@@ -107,7 +133,7 @@ const Comment = ({ item }) => {
           <p>{content}</p>
         </div>
       </CommentStyles>
-      {isReply && <ReplyForm commentId={id} handleToggle={handleToggle}/>}
+      {isReply && <ReplyForm commentId={id} handleToggle={handleToggle} />}
       <Replies replies={replies} />
     </>
   );

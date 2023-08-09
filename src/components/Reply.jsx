@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import ReplyForm from "./ReplyForm";
+import { useGlobalContext } from "../context";
 
 /***************** STYLES ******************/
 const ReplyStyles = styled.div`
@@ -73,19 +74,31 @@ const ReplyStyles = styled.div`
 /***************** COMPONENT ******************/
 
 const Reply = ({ item }) => {
+  const { id, content, createdAt, score, replyingTo, user } = item;
   const [isReply, setIsReply] = useState(false);
+  const { state, dispatch } = useGlobalContext();
 
   const handleToggle = () => {
     setIsReply(!isReply);
   };
-  const { id, content, createdAt, score, replyingTo, user } = item;
+
+  const handleUpvote = () => {
+    const upvoteId = id;
+    dispatch({ type: "UPVOTE A COMMENT", payload: { upvoteId } });
+  };
+
+  const handleDownvote = () => {
+    const downvoteId = id;
+    dispatch({ type: "DOWNVOTE A COMMENT", payload: { downvoteId } });
+  };
+
   return (
     <>
       <ReplyStyles>
         <div className="vote">
-          <input type="image" src="/assets/images/icon-plus.svg" />
+          <input type="image" src="/assets/images/icon-plus.svg" onClick={handleUpvote}/>
           {score}
-          <input type="image" src="/assets/images/icon-minus.svg" />
+          <input type="image" src="/assets/images/icon-minus.svg" onClick={handleDownvote}/>
         </div>
         <div className="name">
           <img src={user.image.png} alt="avatar" />
