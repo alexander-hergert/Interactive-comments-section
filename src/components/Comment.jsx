@@ -77,13 +77,18 @@ const CommentStyles = styled.section`
 
 const Comment = ({ item }) => {
   const { id, content, createdAt, score, replyingTo, user, replies } = item;
-  //use user values to check if the currentuser is the user
   const [isReply, setIsReply] = useState(false);
   const { state, dispatch } = useGlobalContext();
-  const [isUser, setIsUser] = useState(true);
+  const [isUser, setIsUser] = useState(null); //true/false
 
-  //need an effect to setIsUser dependent on currentUser
-  //useEffect = (() => {}, []); //dependency could be state)
+  useEffect(() => {
+    //check if currentUser is owner of comment
+    if (state.currentUser.username === user.username) {
+      setIsUser(true);
+    } else {
+      setIsUser(false);
+    }
+  }, []);
 
   const handleToggle = () => {
     setIsReply(!isReply);
