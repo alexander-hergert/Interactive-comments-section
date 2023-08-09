@@ -80,6 +80,8 @@ const Comment = ({ item }) => {
   const [isReply, setIsReply] = useState(false);
   const { state, dispatch } = useGlobalContext();
   const [isUser, setIsUser] = useState(null); //true/false
+  const [isEdit, setIsEdit] = useState(false);
+  const [textContent, setTextContent] = useState(content);
 
   useEffect(() => {
     //check if currentUser is owner of comment
@@ -110,6 +112,23 @@ const Comment = ({ item }) => {
     });
   };
 
+  const handleOnChange = (e) => {
+    setTextContent(e.target.value);
+  };
+
+  const handleEdit = () => {
+    setIsEdit(!isEdit);
+    //create payload
+    const editId = id;
+    const newText = textContent;
+    if (isEdit) {
+      dispatch({
+        type: "ON EDIT",
+        payload: { editId, newText },
+      });
+    }
+  };
+
   return (
     <>
       <CommentStyles>
@@ -136,7 +155,11 @@ const Comment = ({ item }) => {
           <div className="action">
             <input type="image" src="/assets/images/icon-delete.svg" />
             <p>Delete</p>
-            <input type="image" src="/assets/images/icon-edit.svg" />
+            <input
+              type="image"
+              src="/assets/images/icon-edit.svg"
+              onClick={handleEdit}
+            />
             <p>Edit</p>
           </div>
         ) : (
@@ -150,7 +173,15 @@ const Comment = ({ item }) => {
           </div>
         )}
         <div className="text">
-          <p>{content}</p>
+          {!isEdit && <p>{`${content}`}</p>}
+          {isEdit && (
+            <textarea
+              cols="60"
+              rows="5"
+              defaultValue={content}
+              onChange={handleOnChange}
+            ></textarea>
+          )}
         </div>
       </CommentStyles>
       {isReply && <ReplyForm commentId={id} handleToggle={handleToggle} />}

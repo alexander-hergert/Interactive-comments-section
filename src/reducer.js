@@ -141,6 +141,35 @@ export const reducer = (state, action) => {
         ...state,
         comments: newDownvoteComments,
       };
+    case "ON EDIT":
+      const { editId, newText } = action.payload;
+      //Deep copy
+      const newEditComments = state.comments.map((comment) => ({
+        ...comment,
+        upvotedBy: [...comment.upvotedBy],
+        downvotedBy: [...comment.downvotedBy],
+        replies: comment.replies.map((reply) => ({
+          ...reply,
+          upvotedBy: [...reply.upvotedBy],
+          downvotedBy: [...reply.downvotedBy],
+        })),
+      }));
+      //logic for edit
+      newEditComments.forEach((comment) => {
+        if (editId === comment.id) {
+          comment.content = newText;
+        } else {
+          comment.replies.forEach((reply) => {
+            if (editId === reply.id) {
+              reply.content = newText;
+            }
+          });
+        }
+      });
+      return {
+        ...state,
+        comments: newEditComments,
+      };
     default:
       throw new Error("Unsupported action type");
   }
