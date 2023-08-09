@@ -14,7 +14,7 @@ const AppStyles = styled.main`
 
 function App() {
   const { dispatch } = useGlobalContext();
-  const url = "/src/data.json";
+  const url = "/data.json";
 
   useEffect(() => {
     const fetchDataAsync = async (url) => {
