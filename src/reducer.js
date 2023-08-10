@@ -178,7 +178,7 @@ export const reducer = (state, action) => {
           ...comment,
           replies: comment.replies.filter((reply) => deleteId !== reply.id),
         }))
-        .filter((comment) => deleteId !== comment.id);//todo parent not working
+        .filter((comment) => deleteId !== comment.id);
 
       console.log({
         ...state,
