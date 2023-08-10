@@ -73,7 +73,7 @@ const CreateStyles = styled.div`
 
 /***************** COMPONENT ******************/
 
-const ReplyForm = ({ commentId, handleToggle }) => {
+const ReplyForm = ({ commentId, handleToggle, replyingTo }) => {
   const { state, dispatch } = useGlobalContext();
   const handleReply = (e) => {
     e.preventDefault();
@@ -82,7 +82,6 @@ const ReplyForm = ({ commentId, handleToggle }) => {
     const newContent = e.target[0].value;
     const newDate = new Date().getTime();
     const newScore = 0;
-    const replyingTo = "Alex"; //need to find out how to get the right comment id and name
     const userName = state.currentUser.username;
     const imageSrc = state.currentUser.image.png;
 

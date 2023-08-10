@@ -131,7 +131,7 @@ const CommentStyles = styled.section`
 /***************** COMPONENT ******************/
 
 const Comment = ({ item }) => {
-  const { id, content, createdAt, score, replyingTo, user, replies } = item;
+  const { id, content, createdAt, score, user, replies } = item;
   const [isReply, setIsReply] = useState(false);
   const { state, dispatch } = useGlobalContext();
   const [isUser, setIsUser] = useState(null); //true/false
@@ -245,7 +245,7 @@ const Comment = ({ item }) => {
           )}
         </div>
       </CommentStyles>
-      {isReply && <ReplyForm commentId={id} handleToggle={handleToggle} />}
+      {isReply && <ReplyForm commentId={id} handleToggle={handleToggle} replyingTo={user.username}/>}
       <Replies replies={replies} />
     </>
   );

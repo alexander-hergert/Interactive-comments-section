@@ -253,7 +253,13 @@ const Reply = ({ item }) => {
           )}
         </div>
       </ReplyStyles>
-      {isReply && <ReplyForm commentId={id} handleToggle={handleToggle} />}
+      {isReply && (
+        <ReplyForm
+          commenId={id}
+          handleToggle={handleToggle}
+          replyingTo={replyingTo}
+        />
+      )}
     </>
   );
 };
