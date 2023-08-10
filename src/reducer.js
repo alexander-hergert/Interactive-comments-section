@@ -94,6 +94,8 @@ export const reducer = (state, action) => {
         }
       });
 
+      newUpvoteComments.sort((a, b) => b.score - a.score);
+
       return {
         ...state,
         comments: newUpvoteComments,
@@ -136,6 +138,8 @@ export const reducer = (state, action) => {
           });
         }
       });
+
+      newDownvoteComments.sort((a, b) => b.score - a.score);
 
       return {
         ...state,
