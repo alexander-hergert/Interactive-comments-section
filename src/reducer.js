@@ -71,29 +71,60 @@ export const reducer = (state, action) => {
 
       newUpvoteComments.forEach((comment) => {
         if (upvoteId === comment.id) {
+          //Handle comment
           //execute when comment.upvotedby has no entry of currentUserName
+          //logic to upvote like on youtube
           const alreadyUpvoted = comment.upvotedBy.includes(
             currentUserNameUpvote
           );
-          if (!alreadyUpvoted) {
+          const alreadyDownvoted = comment.downvotedBy.includes(
+            currentUserNameUpvote
+          );
+          if (!alreadyUpvoted && !alreadyDownvoted) {
             comment.score += 1;
             comment.upvotedBy.push(currentUserNameUpvote);
+          } else if (alreadyUpvoted && !alreadyDownvoted) {
+            comment.score -= 1;
+            comment.upvotedBy = comment.upvotedBy.filter(
+              (username) => username !== currentUserNameUpvote
+            );
+          } else if (!alreadyUpvoted && alreadyDownvoted) {
+            comment.score += 2;
+            comment.upvotedBy.push(currentUserNameUpvote);
+            comment.downvotedBy = comment.downvotedBy.filter(
+              (username) => username !== currentUserNameUpvote
+            );
           }
         } else {
+          //Handle reply
           comment.replies.forEach((reply) => {
             if (upvoteId === reply.id) {
               const alreadyUpvoted = reply.upvotedBy.includes(
                 currentUserNameUpvote
               );
-              if (!alreadyUpvoted) {
+              const alreadyDownvoted = reply.downvotedBy.includes(
+                currentUserNameUpvote
+              );
+              if (!alreadyUpvoted && !alreadyDownvoted) {
                 reply.score += 1;
                 reply.upvotedBy.push(currentUserNameUpvote);
+              } else if (alreadyUpvoted && !alreadyDownvoted) {
+                reply.score -= 1;
+                reply.upvotedBy = reply.upvotedBy.filter(
+                  (username) => username !== currentUserNameUpvote
+                );
+              } else if (!alreadyUpvoted && alreadyDownvoted) {
+                reply.score += 2;
+                reply.upvotedBy.push(currentUserNameUpvote);
+                reply.downvotedBy = reply.downvotedBy.filter(
+                  (username) => username !== currentUserNameUpvote
+                );
               }
             }
           });
         }
       });
-
+      //sort comments by highest score
       newUpvoteComments.sort((a, b) => b.score - a.score);
 
       return {
@@ -117,22 +148,51 @@ export const reducer = (state, action) => {
 
       newDownvoteComments.forEach((comment) => {
         if (downvoteId === comment.id) {
-          const alreadyDownvoted = comment.downvotedBy.includes(
+          const alreadyUpvoted = comment.upvotedBy.includes(
             currentUserNameDownvote
           );
-          if (!alreadyDownvoted) {
+          const alreadyDownvoted = comment.downvotedBy.includes(
+            currentUserNameDownvote
+          ); //Handle comment
+          if (!alreadyUpvoted && !alreadyDownvoted) {
             comment.score -= 1;
             comment.downvotedBy.push(currentUserNameDownvote);
+          } else if (!alreadyUpvoted && alreadyDownvoted) {
+            comment.score += 1;
+            comment.downvotedBy = comment.downvotedBy.filter(
+              (username) => username !== currentUserNameDownvote
+            );
+          } else if (alreadyUpvoted && !alreadyDownvoted) {
+            comment.score -= 2;
+            comment.downvotedBy.push(currentUserNameDownvote);
+            comment.upvotedBy = comment.upvotedBy.filter(
+              (username) => username !== currentUserNameDownvote
+            );
           }
         } else {
+          //Handle reply
           comment.replies.forEach((reply) => {
             if (downvoteId === reply.id) {
+              const alreadyUpvoted = reply.upvotedBy.includes(
+                currentUserNameDownvote
+              );
               const alreadyDownvoted = reply.downvotedBy.includes(
                 currentUserNameDownvote
               );
-              if (!alreadyDownvoted) {
+              if (!alreadyUpvoted && !alreadyDownvoted) {
                 reply.score -= 1;
                 reply.downvotedBy.push(currentUserNameDownvote);
+              } else if (!alreadyUpvoted && alreadyDownvoted) {
+                reply.score += 1;
+                reply.downvotedBy = reply.downvotedBy.filter(
+                  (username) => username !== currentUserNameDownvote
+                );
+              } else if (alreadyUpvoted && !alreadyDownvoted) {
+                reply.score -= 2;
+                reply.downvotedBy.push(currentUserNameDownvote);
+                reply.upvotedBy = reply.upvotedBy.filter(
+                  (username) => username !== currentUserNameDownvote
+                );
               }
             }
           });
