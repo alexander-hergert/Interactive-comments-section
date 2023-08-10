@@ -179,11 +179,6 @@ export const reducer = (state, action) => {
           replies: comment.replies.filter((reply) => deleteId !== reply.id),
         }))
         .filter((comment) => deleteId !== comment.id);
-
-      console.log({
-        ...state,
-        comments: newDeleteComments,
-      });
       return {
         ...state,
         comments: newDeleteComments,

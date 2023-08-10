@@ -8,7 +8,7 @@ import Modal from "./Modal";
 
 /***************** STYLES ******************/
 const CommentStyles = styled.section`
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 2rem;
   background-color: white;
   border-radius: 5px;
@@ -30,6 +30,10 @@ const CommentStyles = styled.section`
     width: 6rem;
     color: hsl(238, 40%, 52%);
     font-weight: bold;
+
+    input:hover {
+      filter: invert(100%);
+    }
   }
   .name {
     grid-area: name;
@@ -54,6 +58,21 @@ const CommentStyles = styled.section`
     gap: 1rem;
     color: hsl(238, 40%, 52%);
     font-weight: bold;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    div:hover {
+      opacity: 70%;
+    }
+
+    .delete {
+      color: hsl(358, 79%, 66%);
+    }
   }
   .text {
     grid-area: text;
@@ -61,6 +80,38 @@ const CommentStyles = styled.section`
       color: hsl(211, 10%, 45%);
       line-height: 1.5;
     }
+    button {
+      background-color: hsl(238, 40%, 52%);
+      color: white;
+      border: none;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      float: right;
+    }
+    button:hover {
+      opacity: 70%;
+    }
+  }
+
+  textarea {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    resize: none;
+  }
+
+  textarea:focus {
+    border: 1px solid hsl(238, 40%, 52%);
+    outline: none;
+  }
+
+  .you {
+    background-color: hsl(238, 40%, 52%);
+    color: white;
+    border-radius: 5px;
+    padding: 0.25rem 0.5rem;
   }
 
   //DESKTOP
@@ -155,43 +206,39 @@ const Comment = ({ item }) => {
         <div className="name">
           <img src={user.image.png} alt="avatar" />
           <p>{user.username}</p>
-          {isUser && <p>you</p>}
+          {isUser && <p className="you">you</p>}
           <p>{getPostingTime(createdAt)}</p>
         </div>
         {isUser ? (
           <div className="action">
-            <input
-              type="image"
-              src="/assets/images/icon-delete.svg"
-              onClick={handleDelete}
-            />
-            <p>Delete</p>
-            <input
-              type="image"
-              src="/assets/images/icon-edit.svg"
-              onClick={handleEdit}
-            />
-            <p>Edit</p>
+            <div onClick={handleDelete}>
+              <input type="image" src="/assets/images/icon-delete.svg" />
+              <p className="delete">Delete</p>
+            </div>
+            <div onClick={handleEdit}>
+              <input type="image" src="/assets/images/icon-edit.svg" />
+              <p>Edit</p>
+            </div>
           </div>
         ) : (
           <div className="action">
-            <input
-              type="image"
-              src="/assets/images/icon-reply.svg"
-              onClick={handleToggle}
-            />
-            <p>Reply</p>
+            <div onClick={handleToggle}>
+              <input type="image" src="/assets/images/icon-reply.svg" />
+              <p>Reply</p>
+            </div>
           </div>
         )}
         <div className="text">
           {!isEdit && <p>{`${content}`}</p>}
           {isEdit && (
-            <textarea
-              cols="60"
-              rows="5"
-              defaultValue={content}
-              onChange={handleOnChange}
-            ></textarea>
+            <>
+              <textarea
+                rows="5"
+                defaultValue={content}
+                onChange={handleOnChange}
+              ></textarea>
+              <button onClick={handleEdit}>UPDATE</button>
+            </>
           )}
         </div>
       </CommentStyles>

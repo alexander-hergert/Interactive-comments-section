@@ -23,6 +23,10 @@ body {
   background-color: var(--very-light-gray);
 }
 
+button {
+  cursor: pointer;
+}
+
 .attribution {
   font-size: 11px;
   text-align: center;

@@ -8,21 +8,35 @@ const CreateStyles = styled.div`
   border-radius: 5px;
   background-color: white;
   padding: 2rem;
-  margin: 3rem 0;
-  display: grid;
-  grid-template:
-    "textarea textarea"
-    "image button";
+  margin: 1rem 0;
+
+  form {
+    display: grid;
+    grid-template-areas:
+      "textarea textarea"
+      "image button";
+    align-items: center;
+  }
 
   img {
     grid-area: image;
     width: 2rem;
+    justify-self: start;
   }
 
   textarea {
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 5px;
     grid-area: textarea;
+    width: 100%;
+    resize: none;
+    margin-bottom: 1rem;
+    border-color: hsl(223, 19%, 93%);
+  }
+
+  textarea:focus {
+    border: 1px solid hsl(238, 40%, 52%);
+    outline: none;
   }
 
   button {
@@ -32,6 +46,9 @@ const CreateStyles = styled.div`
     border: none;
     border-radius: 5px;
     grid-area: button;
+    padding: 0.75rem 1rem;
+    padding: 0.75rem 1rem;
+    justify-self: end;
   }
 
   //DESKTOP
@@ -95,8 +112,7 @@ const ReplyForm = ({ commentId, handleToggle }) => {
         <textarea
           name="new comment"
           id="new comment"
-          cols="30"
-          rows="10"
+          rows="5"
           placeholder="Add a comment..."
           aria-label="new comment"
         ></textarea>
