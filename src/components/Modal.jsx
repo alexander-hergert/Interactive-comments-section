@@ -22,7 +22,8 @@ const ModalStyles = styled.div`
   left: 50%;
   transform: translateX(-50%);
   padding: 1rem;
-  width: 30rem;
+  width: 90%;
+  max-width: 30rem;
   height: 15rem;
   background-color: white;
   border-radius: 10px;
