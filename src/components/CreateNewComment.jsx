@@ -50,11 +50,25 @@ const CreateStyles = styled.div`
     justify-self: end;
   }
 
+  button:hover {
+    opacity: 70%;
+  }
+
   //DESKTOP
   @media only screen and (min-width: 800px) {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
+    width: 70%;
+    margin: auto;
+    min-width: 40rem;
+    form {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 1rem;
+      height: 5rem;
+    }
+    textarea {
+      height: 5rem;
+    }
   }
 `;
 

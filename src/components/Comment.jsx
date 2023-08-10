@@ -26,7 +26,7 @@ const CommentStyles = styled.section`
     background-color: hsl(223, 19%, 93%);
     border-radius: 5px;
     margin: 0.5rem;
-    margin-left: 0;
+    margin-left: -0.75rem;
     width: 6rem;
     color: hsl(238, 40%, 52%);
     font-weight: bold;
@@ -121,6 +121,9 @@ const CommentStyles = styled.section`
       "vote text text text";
     .vote {
       flex-direction: column;
+      width: 2.5rem;
+      margin-right: 1rem;
+      height: 7rem;
     }
   }
 `;

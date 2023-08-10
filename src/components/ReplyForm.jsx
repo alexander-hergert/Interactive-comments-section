@@ -7,7 +7,7 @@ import { useGlobalContext } from "../context";
 const CreateStyles = styled.div`
   border-radius: 5px;
   background-color: white;
-  padding: 2rem;
+  padding: 1rem;
   margin: 1rem 0;
 
   form {
@@ -51,11 +51,23 @@ const CreateStyles = styled.div`
     justify-self: end;
   }
 
+  button:hover {
+    opacity: 70%;
+  }
+
   //DESKTOP
   @media only screen and (min-width: 800px) {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
+    margin: 1rem auto;
+    form {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 1rem;
+      height: 5rem;
+    }
+    textarea {
+      height: 5rem;
+    }
   }
 `;
 
