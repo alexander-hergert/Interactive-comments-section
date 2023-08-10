@@ -39,7 +39,7 @@ export const reducer = (state, action) => {
             // all the comments' ids again to find the index of the parent comment.
             const parentCommentIndex = newUpdatedComments.findIndex(
               //callback
-              (c) => c.id === comment.id//Iterate parent id with current fix id
+              (c) => c.id === comment.id //Iterate parent id with current fix id
             );
             if (parentCommentIndex !== -1) {
               // If we found a valid parent comment index, it means we've located the parent comment.

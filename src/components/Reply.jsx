@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import ReplyForm from "./ReplyForm";
 import { useGlobalContext } from "../context";
 import Modal from "./Modal";
+import { getPostingTime } from "../utility/utility";
 
 /***************** STYLES ******************/
 const ReplyStyles = styled.div`
@@ -213,7 +214,7 @@ const Reply = ({ item }) => {
           <img src={user.image.png} alt="avatar" />
           <p>{user.username}</p>
           {isUser && <p className="you">you</p>}
-          <p>{createdAt}</p>
+          <p>{getPostingTime(createdAt)}</p>
         </div>
         {isUser ? (
           <div className="action">
@@ -255,9 +256,9 @@ const Reply = ({ item }) => {
       </ReplyStyles>
       {isReply && (
         <ReplyForm
-          commenId={id}
+          commentId={id}
           handleToggle={handleToggle}
-          replyingTo={replyingTo}
+          replyingTo={user.username}
         />
       )}
     </>
