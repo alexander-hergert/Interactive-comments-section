@@ -5,10 +5,11 @@ import { getPostingTime } from "../utility/utility";
 import ReplyForm from "./ReplyForm";
 import { useGlobalContext } from "../context";
 import Modal from "./Modal";
+import { BiSolidDownArrowSquare } from "react-icons/bi";
+import { BiSolidUpArrowSquare } from "react-icons/bi";
 
 /***************** STYLES ******************/
 const CommentStyles = styled.section`
-  margin-bottom: 1rem;
   padding: 2rem;
   background-color: white;
   border-radius: 5px;
@@ -17,6 +18,7 @@ const CommentStyles = styled.section`
     "name name"
     "text text"
     "vote action";
+
   .vote {
     grid-area: vote;
     display: flex;
@@ -134,6 +136,16 @@ const CommentStyles = styled.section`
   }
 `;
 
+const Toggler = styled.div`
+  position: relative;
+  top: -1rem;
+  width: 2rem;
+  text-align: center;
+  margin: auto;
+  cursor: pointer;
+  font-size: 2rem;
+`;
+
 /***************** COMPONENT ******************/
 
 const Comment = ({ item }) => {
@@ -153,6 +165,7 @@ const Comment = ({ item }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [textContent, setTextContent] = useState(content);
   const [isDelete, setIsDelete] = useState(false);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
   const upvoteRef = useRef();
   const downvoteRef = useRef();
 
@@ -164,6 +177,10 @@ const Comment = ({ item }) => {
       setIsUser(false);
     }
   }, [state]);
+
+  const handleCommentOpener = () => {
+    setIsCommentOpen(!isCommentOpen);
+  };
 
   const handleToggle = () => {
     setIsReply(!isReply);
@@ -289,6 +306,9 @@ const Comment = ({ item }) => {
           )}
         </div>
       </CommentStyles>
+      <Toggler onClick={handleCommentOpener}>
+        {isCommentOpen ? <BiSolidDownArrowSquare /> : <BiSolidUpArrowSquare />}
+      </Toggler>
       {isReply && (
         <ReplyForm
           commentId={id}
@@ -296,7 +316,7 @@ const Comment = ({ item }) => {
           replyingTo={user.username}
         />
       )}
-      <Replies replies={replies} />
+      {isCommentOpen && <Replies replies={replies} />}
     </>
   );
 };
