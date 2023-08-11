@@ -249,10 +249,6 @@ export const reducer = (state, action) => {
       };
     case "SWITCH USER":
       const newUser = action.payload;
-      console.log({
-        ...state,
-        currentUser: newUser,
-      });
       return {
         ...state,
         currentUser: newUser,

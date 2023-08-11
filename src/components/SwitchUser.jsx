@@ -6,6 +6,17 @@ import { useGlobalContext } from "../context";
 const Styles = styled.div`
   cursor: pointer;
 
+  &.selected-user {
+    img {
+      box-shadow: 0 0 20px hsl(238, 40%, 52%);
+      border-radius: 50%;
+    }
+    p {
+      font-weight: bold;
+      color: hsl(238, 40%, 52%);
+    }
+  }
+
   @media only screen and (min-width: 800px) {
   }
 `;
@@ -29,7 +40,14 @@ const SwitchUser = ({ user }) => {
     dispatch({ type: "SWITCH USER", payload: newUser });
   };
 
-  useEffect(() => {}, [state]);
+  useEffect(() => {
+    const currentUserName = state.currentUser?.username;
+    if (currentUserName === username) {
+      ref.current.classList.add("selected-user");
+    } else {
+      ref.current.classList.remove("selected-user");
+    }
+  }, [state]);
 
   return (
     <Styles onClick={handleSwitchUser} ref={ref}>

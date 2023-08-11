@@ -40,6 +40,7 @@ const CommentStyles = styled.section`
       filter: invert(100%);
     }
   }
+
   .name {
     grid-area: name;
     display: flex;
