@@ -127,6 +127,11 @@ export const reducer = (state, action) => {
       //sort comments by highest score
       newUpvoteComments.sort((a, b) => b.score - a.score);
 
+      console.log({
+        ...state,
+        comments: newUpvoteComments,
+      });
+
       return {
         ...state,
         comments: newUpvoteComments,

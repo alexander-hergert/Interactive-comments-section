@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Replies from "./Replies";
 import { styled } from "styled-components";
 import { getPostingTime } from "../utility/utility";
@@ -30,6 +30,11 @@ const CommentStyles = styled.section`
     width: 6rem;
     color: hsl(238, 40%, 52%);
     font-weight: bold;
+
+    .marked {
+      filter: brightness(0) saturate(100%) invert(37%) sepia(8%) saturate(4693%)
+        hue-rotate(201deg) brightness(93%) contrast(89%);
+    }
 
     input:hover {
       filter: invert(100%);
@@ -123,7 +128,7 @@ const CommentStyles = styled.section`
       flex-direction: column;
       width: 2.5rem;
       margin-right: 1rem;
-      height: 7rem;
+      height: 6rem;
     }
   }
 `;
@@ -131,13 +136,24 @@ const CommentStyles = styled.section`
 /***************** COMPONENT ******************/
 
 const Comment = ({ item }) => {
-  const { id, content, createdAt, score, user, replies } = item;
+  const {
+    id,
+    content,
+    createdAt,
+    score,
+    user,
+    replies,
+    upvotedBy,
+    downvotedBy,
+  } = item;
   const [isReply, setIsReply] = useState(false);
   const { state, dispatch } = useGlobalContext();
   const [isUser, setIsUser] = useState(null); //true/false
   const [isEdit, setIsEdit] = useState(false);
   const [textContent, setTextContent] = useState(content);
   const [isDelete, setIsDelete] = useState(false);
+  const upvoteRef = useRef();
+  const downvoteRef = useRef();
 
   useEffect(() => {
     //check if currentUser is owner of comment
@@ -156,16 +172,37 @@ const Comment = ({ item }) => {
     const upvoteId = id;
     dispatch({
       type: "UPVOTE A COMMENT",
-      payload: { upvoteId, currentUserName: state.currentUser.username },
+      payload: { upvoteId, currentUserNameUpvote: state.currentUser.username },
     });
+    //logic to change the style
+    const currentUserName = state.currentUser.username;
+    const containsUpvotedName = upvotedBy.includes(currentUserName);
+    if (containsUpvotedName) {
+      upvoteRef.current.classList.remove("marked");
+    } else {
+      upvoteRef.current.classList.add("marked");
+      downvoteRef.current.classList.remove("marked");
+    }
   };
 
   const handleDownvote = () => {
     const downvoteId = id;
     dispatch({
       type: "DOWNVOTE A COMMENT",
-      payload: { downvoteId, currentUserName: state.currentUser.username },
+      payload: {
+        downvoteId,
+        currentUserNameDownvote: state.currentUser.username,
+      },
     });
+    //logic to change the style
+    const currentUserName = state.currentUser.username;
+    const containsDownvotedName = downvotedBy.includes(currentUserName);
+    if (containsDownvotedName) {
+      downvoteRef.current.classList.remove("marked");
+    } else {
+      upvoteRef.current.classList.remove("marked");
+      downvoteRef.current.classList.add("marked");
+    }
   };
 
   const handleOnChange = (e) => {
@@ -198,12 +235,14 @@ const Comment = ({ item }) => {
             type="image"
             src="/assets/images/icon-plus.svg"
             onClick={handleUpvote}
+            ref={upvoteRef}
           />
           {score}
           <input
             type="image"
             src="/assets/images/icon-minus.svg"
             onClick={handleDownvote}
+            ref={downvoteRef}
           />
         </div>
         <div className="name">
@@ -245,7 +284,13 @@ const Comment = ({ item }) => {
           )}
         </div>
       </CommentStyles>
-      {isReply && <ReplyForm commentId={id} handleToggle={handleToggle} replyingTo={user.username}/>}
+      {isReply && (
+        <ReplyForm
+          commentId={id}
+          handleToggle={handleToggle}
+          replyingTo={user.username}
+        />
+      )}
       <Replies replies={replies} />
     </>
   );
