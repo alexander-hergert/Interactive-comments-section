@@ -4,6 +4,7 @@ import Comments from "./components/Comments";
 import CreateNewComment from "./components/CreateNewComment";
 import { styled } from "styled-components";
 import { useGlobalContext } from "./context";
+import SwitchUser from "./components/SwitchUser";
 
 /***************** STYLES ******************/
 const AppStyles = styled.main`
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <AppStyles>
+      <SwitchUser />
       <Comments />
       <CreateNewComment />
     </AppStyles>

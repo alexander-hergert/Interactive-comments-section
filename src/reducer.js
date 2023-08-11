@@ -127,11 +127,6 @@ export const reducer = (state, action) => {
       //sort comments by highest score
       newUpvoteComments.sort((a, b) => b.score - a.score);
 
-      console.log({
-        ...state,
-        comments: newUpvoteComments,
-      });
-
       return {
         ...state,
         comments: newUpvoteComments,
@@ -139,7 +134,7 @@ export const reducer = (state, action) => {
 
     case "DOWNVOTE A COMMENT":
       const { downvoteId, currentUserNameDownvote } = action.payload;
-
+      //deep copy
       const newDownvoteComments = state.comments.map((comment) => ({
         ...comment,
         upvotedBy: [...comment.upvotedBy],
@@ -150,7 +145,7 @@ export const reducer = (state, action) => {
           downvotedBy: [...reply.downvotedBy],
         })),
       }));
-
+      //Iterating to find id of comment or reply
       newDownvoteComments.forEach((comment) => {
         if (downvoteId === comment.id) {
           const alreadyUpvoted = comment.upvotedBy.includes(
@@ -252,6 +247,19 @@ export const reducer = (state, action) => {
         ...state,
         comments: newDeleteComments,
       };
+    case "SWITCH USER":
+      const newUser = action.payload;
+
+      console.log({
+        ...state,
+        currentUser: newUser,
+      });
+
+      return {
+        ...state,
+        currentUser: newUser,
+      };
+
     default:
       throw new Error("Unsupported action type");
   }
