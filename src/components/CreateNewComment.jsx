@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { nanoid } from "nanoid";
 import { useGlobalContext } from "../context";
@@ -76,8 +76,28 @@ const CreateStyles = styled.div`
 
 const CreateNewComment = () => {
   const { state, dispatch } = useGlobalContext();
-  const handleCreateComment = (e) => {
+  const [textContent, setTextContent] = useState("");
+
+  const handleOnChange = (e) => {
+    setTextContent(e.target.value);
+  };
+
+  useEffect(() => {
+    const fetchQuote = async () => {
+      const response = await fetch("https://api.adviceslip.com/advice");
+      const data = await response.json();
+      setTextContent(data.slip.advice);
+    };
+    fetchQuote();
+  }, [state]);
+
+  const handleCreateComment = async (e) => {
     e.preventDefault();
+
+    if (!e.target[0].value) {
+      e.target[0].value = textContent;
+    }
+    setTextContent(e.target[0].value);
     //creating the payload
     const userName = state.currentUser.username;
     const imageSrc = state.currentUser.image.png;
@@ -101,6 +121,8 @@ const CreateNewComment = () => {
       replies: [],
     };
     dispatch({ type: "NEW COMMENT", payload: newComment });
+    e.target[0].value = "";
+    setTextContent("");
   };
 
   return (
@@ -111,8 +133,9 @@ const CreateNewComment = () => {
           name="new comment"
           id="new comment"
           rows="5"
-          placeholder="Add a comment..."
+          placeholder="Add a comment... or just push the send button"
           aria-label="new comment"
+          onChange={handleOnChange}
         ></textarea>
         <button>SEND</button>
       </form>

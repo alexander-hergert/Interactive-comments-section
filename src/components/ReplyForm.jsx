@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { nanoid } from "nanoid";
 import { useGlobalContext } from "../context";
@@ -75,8 +75,23 @@ const CreateStyles = styled.div`
 
 const ReplyForm = ({ commentId, handleToggle, replyingTo }) => {
   const { state, dispatch } = useGlobalContext();
+  const [textContent, setTextContent] = useState("");
+
+  useEffect(() => {
+    const fetchQuote = async () => {
+      const response = await fetch("https://api.adviceslip.com/advice");
+      const data = await response.json();
+      setTextContent(data.slip.advice);
+    };
+    fetchQuote();
+  }, [state]);
+
   const handleReply = (e) => {
     e.preventDefault();
+    if (!e.target[0].value) {
+      e.target[0].value = textContent;
+    }
+    setTextContent(e.target[0].value);
     //creating the payload
     const newId = nanoid();
     const newContent = e.target[0].value;
@@ -124,7 +139,7 @@ const ReplyForm = ({ commentId, handleToggle, replyingTo }) => {
           name="new comment"
           id="new comment"
           rows="5"
-          placeholder="Add a comment..."
+          placeholder="Add a comment... or just push the send button"
           aria-label="new comment"
         ></textarea>
         <button>Reply</button>
