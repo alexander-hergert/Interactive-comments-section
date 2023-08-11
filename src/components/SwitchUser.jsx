@@ -17,13 +17,24 @@ const Styles = styled.div`
     }
   }
 
+  &.selected-user-dark {
+    img {
+      box-shadow: 0 0 20px hsl(358, 79%, 66%);
+      border-radius: 50%;
+    }
+    p {
+      font-weight: bold;
+      color: hsl(358, 79%, 66%);
+    }
+  }
+
   @media only screen and (min-width: 800px) {
   }
 `;
 
 /***************** COMPONENT ******************/
 
-const SwitchUser = ({ user }) => {
+const SwitchUser = ({ user, isDarkMode }) => {
   const { username, path } = user;
   const { state, dispatch } = useGlobalContext();
   const ref = useRef();
@@ -43,11 +54,25 @@ const SwitchUser = ({ user }) => {
   useEffect(() => {
     const currentUserName = state.currentUser?.username;
     if (currentUserName === username) {
-      ref.current.classList.add("selected-user");
+      if (isDarkMode) {
+        ref.current.classList.add("selected-user-dark");
+      } else {
+        ref.current.classList.add("selected-user");
+      }
     } else {
+      ref.current.classList.remove("selected-user-dark");
       ref.current.classList.remove("selected-user");
     }
   }, [state]);
+
+  useEffect(() => {
+    const currentUserName = state.currentUser?.username;
+    if (isDarkMode && currentUserName === username) {
+      ref.current.classList.add("selected-user-dark");
+    } else {
+      ref.current.classList.remove("selected-user-dark");
+    }
+  }, [isDarkMode]);
 
   return (
     <Styles onClick={handleSwitchUser} ref={ref}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Comment from "./Comment";
 import { styled } from "styled-components";
 import { useGlobalContext } from "../context";
@@ -8,7 +8,7 @@ const CommentsStyles = styled.section`
   background-color: hsl(228, 33%, 97%);
 
   @media only screen and (min-width: 800px) {
-    width: 70%;
+    width: 60%;
     margin: auto;
     min-width: 40rem;
   }
@@ -16,11 +16,21 @@ const CommentsStyles = styled.section`
 
 /***************** COMPONENT ******************/
 
-const Comments = () => {
+const Comments = ({ isDarkMode }) => {
   const { state } = useGlobalContext();
 
+  const ref = useRef();
+
+  useEffect(() => {
+    if (isDarkMode) {
+      ref.current.style.backgroundColor = "hsl(212, 24%, 26%)";
+    } else {
+      ref.current.style.backgroundColor = "hsl(228, 33%, 97%)";
+    }
+  }, [isDarkMode]);
+
   return (
-    <CommentsStyles>
+    <CommentsStyles ref={ref}>
       {state?.comments?.map((item) => (
         <Comment key={item.id} item={item} />
       ))}

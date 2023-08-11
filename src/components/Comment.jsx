@@ -138,7 +138,7 @@ const CommentStyles = styled.section`
 
 const Toggler = styled.div`
   position: relative;
-  top: -1rem;
+  top: -2rem;
   width: 2rem;
   text-align: center;
   margin: auto;

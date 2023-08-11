@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import { useGlobalContext } from "../context";
 import { users } from "../users";
@@ -11,6 +11,7 @@ const Styles = styled.section`
   margin-bottom: 2rem;
   gap: 2rem;
   text-align: center;
+  color: white;
   //DESKTOP
   @media only screen and (min-width: 800px) {
   }
@@ -18,11 +19,22 @@ const Styles = styled.section`
 
 /***************** COMPONENT ******************/
 
-const SwitchUserContainer = () => {
+const SwitchUserContainer = ({ isDarkMode }) => {
+  const ref = useRef();
+
+  useEffect(() => {
+    if (isDarkMode) {
+      ref.current.style.color = "white";
+    } else {
+      ref.current.style.color = "black";
+    }
+  }, [isDarkMode]);
   return (
-    <Styles>
+    <Styles ref={ref}>
       {users.map((user) => {
-        return <SwitchUser key={user.username} user={user} />;
+        return (
+          <SwitchUser key={user.username} user={user} isDarkMode={isDarkMode} />
+        );
       })}
     </Styles>
   );

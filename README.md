@@ -1,6 +1,6 @@
 # Frontend Mentor - Interactive comments section
 
-![Design preview for the Interactive comments section coding challenge](/assets/design/desktop-preview.jpg)
+![Design preview for the Interactive comments section coding challenge](assets/design/desktop-preview.jpg)
 
 ## Welcome! 👋
 
@@ -41,4 +41,10 @@ Want some support on the challenge? [Join our Slack community](https://www.front
 
 ### Built with
 
+- React
+- Styled-Components
+
 ### What I learned
+
+- More about useReducer and GlobalContext
+- Spreading and creating deep copies of objects and arrays

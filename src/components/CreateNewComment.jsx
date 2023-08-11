@@ -56,7 +56,7 @@ const CreateStyles = styled.div`
 
   //DESKTOP
   @media only screen and (min-width: 800px) {
-    width: 70%;
+    width: 60%;
     margin: auto;
     min-width: 40rem;
     form {
