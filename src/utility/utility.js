@@ -49,6 +49,18 @@ export const getPostingTime = (postingDate) => {
   } else {
     formattedTimePassed = `few seconds ago`;
   }
-
   return formattedTimePassed;
+};
+
+export const saveLocalData = (data) => {
+  const serializedData = JSON.stringify(data);
+  localStorage.setItem("localData", serializedData);
+};
+
+export const readLocalData = () => {
+  const serializedData = localStorage.getItem("localData");
+  if (serializedData) {
+    return JSON.parse(serializedData);
+  }
+  return null;
 };

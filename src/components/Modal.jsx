@@ -17,28 +17,37 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalStyles = styled.div`
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  padding: 1rem;
+  padding: 0 2rem;
   width: 90%;
   max-width: 30rem;
   height: 15rem;
   background-color: white;
   border-radius: 10px;
+  h3{
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    font-weight: normal;
+  }
   p {
     color: hsl(211, 10%, 45%);
+    line-height: 1.5;
+    font-size: 1.15rem;
   }
   div {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
+    justify-content: space-between;
     button {
       padding: 1rem;
       color: white;
       border-radius: 10px;
       border: none;
+      width: 47%;
     }
   }
   .cancel {

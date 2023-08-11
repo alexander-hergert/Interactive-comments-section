@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchData } from "./utility/utility";
+import { fetchData, readLocalData } from "./utility/utility";
 import Comments from "./components/Comments";
 import CreateNewComment from "./components/CreateNewComment";
 import { styled } from "styled-components";
@@ -20,15 +20,20 @@ function App() {
   const url = "/data.json";
 
   useEffect(() => {
-    const fetchDataAsync = async (url) => {
-      try {
-        const data = await fetchData(url);
-        dispatch({ type: "RENDER", payload: data });
-      } catch (error) {
-        console.log("Error fetching data:", error.message);
-      }
-    };
-    fetchDataAsync(url);
+    const localData = readLocalData();
+    if (localData) {
+      dispatch({ type: "RENDER", payload: localData });
+    } else {
+      const fetchDataAsync = async (url) => {
+        try {
+          const data = await fetchData(url);
+          dispatch({ type: "RENDER", payload: data });
+        } catch (error) {
+          console.log("Error fetching data:", error.message);
+        }
+      };
+      fetchDataAsync(url);
+    }
   }, []);
 
   useEffect(() => {

@@ -1,10 +1,17 @@
+import { saveLocalData } from "./utility/utility";
+
 export const reducer = (state, action) => {
   switch (action.type) {
     case "RENDER":
+      saveLocalData(action.payload);
       return action.payload;
     case "NEW COMMENT":
       const newComment = action.payload;
       const newComments = [...state.comments, newComment];
+      saveLocalData({
+        ...state,
+        comments: newComments,
+      });
       return {
         ...state,
         comments: newComments,
@@ -19,6 +26,10 @@ export const reducer = (state, action) => {
           };
         }
         return comment;
+      });
+      saveLocalData({
+        ...state,
+        comments: updatedComments,
       });
       return {
         ...state,
@@ -49,7 +60,10 @@ export const reducer = (state, action) => {
           }
         });
       });
-
+      saveLocalData({
+        ...state,
+        comments: newUpdatedComments,
+      });
       return {
         ...state,
         comments: newUpdatedComments,
@@ -127,6 +141,10 @@ export const reducer = (state, action) => {
       //sort comments by highest score
       newUpvoteComments.sort((a, b) => b.score - a.score);
 
+      saveLocalData({
+        ...state,
+        comments: newUpvoteComments,
+      });
       return {
         ...state,
         comments: newUpvoteComments,
@@ -201,6 +219,10 @@ export const reducer = (state, action) => {
 
       newDownvoteComments.sort((a, b) => b.score - a.score);
 
+      saveLocalData({
+        ...state,
+        comments: newDownvoteComments,
+      });
       return {
         ...state,
         comments: newDownvoteComments,
@@ -249,6 +271,10 @@ export const reducer = (state, action) => {
       };
     case "SWITCH USER":
       const newUser = action.payload;
+      saveLocalData({
+        ...state,
+        currentUser: newUser,
+      });
       return {
         ...state,
         currentUser: newUser,
