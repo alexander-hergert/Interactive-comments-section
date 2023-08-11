@@ -26,13 +26,11 @@ const SwitchUser = () => {
   const handleSwitchUser = (path, username) => {
     //payload
     const newUser = {
-      currentUser: {
-        image: {
-          png: `${path}.png`,
-          webp: `${path}.webp`,
-        },
-        username: username,
+      image: {
+        png: `${path}.png`,
+        webp: `${path}.webp`,
       },
+      username: username,
     };
     dispatch({ type: "SWITCH USER", payload: newUser });
   };
