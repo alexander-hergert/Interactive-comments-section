@@ -1,29 +1,23 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import { useGlobalContext } from "../context";
 
 /***************** STYLES ******************/
-const Styles = styled.section`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
-  gap: 2rem;
-  text-align: center;
-  div {
-    cursor: pointer;
-  }
+const Styles = styled.div`
+  cursor: pointer;
 
-  //DESKTOP
   @media only screen and (min-width: 800px) {
   }
 `;
 
 /***************** COMPONENT ******************/
 
-const SwitchUser = () => {
+const SwitchUser = ({ user }) => {
+  const { username, path } = user;
   const { state, dispatch } = useGlobalContext();
+  const ref = useRef();
 
-  const handleSwitchUser = (path, username) => {
+  const handleSwitchUser = () => {
     //payload
     const newUser = {
       image: {
@@ -35,64 +29,12 @@ const SwitchUser = () => {
     dispatch({ type: "SWITCH USER", payload: newUser });
   };
 
+  useEffect(() => {}, [state]);
+
   return (
-    <Styles>
-      <div
-        onClick={() =>
-          handleSwitchUser(
-            "/assets/images/avatars/image-amyrobson",
-            "amyrobson"
-          )
-        }
-      >
-        <img
-          src="/assets/images/avatars/image-amyrobson.png"
-          alt="amyrobson-avatar"
-        />
-        <p>amyrobson</p>
-      </div>
-      <div
-        onClick={() =>
-          handleSwitchUser(
-            "/assets/images/avatars/image-juliusomo",
-            "juliusomo"
-          )
-        }
-      >
-        <img
-          src="/assets/images/avatars/image-juliusomo.png"
-          alt="juliusomo-avatar"
-        />
-        <p>juliusomo</p>
-      </div>
-      <div
-        onClick={() =>
-          handleSwitchUser(
-            "/assets/images/avatars/image-maxblagun",
-            "maxblagun"
-          )
-        }
-      >
-        <img
-          src="/assets/images/avatars/image-maxblagun.png"
-          alt="maxblagun-avatar"
-        />
-        <p>maxblagun</p>
-      </div>
-      <div
-        onClick={() =>
-          handleSwitchUser(
-            "/assets/images/avatars/image-ramsesmiron",
-            "ramsesmiron"
-          )
-        }
-      >
-        <img
-          src="/assets/images/avatars/image-ramsesmiron.png"
-          alt="ramsesmiron-avatar"
-        />
-        <p>ramsesmiron</p>
-      </div>
+    <Styles onClick={handleSwitchUser} ref={ref}>
+      <img src={`${path}.png`} alt={`${username}-avatar`} />
+      <p>{username}</p>
     </Styles>
   );
 };

@@ -162,7 +162,7 @@ const Comment = ({ item }) => {
     } else {
       setIsUser(false);
     }
-  }, []);
+  }, [state]);
 
   const handleToggle = () => {
     setIsReply(!isReply);
@@ -174,15 +174,6 @@ const Comment = ({ item }) => {
       type: "UPVOTE A COMMENT",
       payload: { upvoteId, currentUserNameUpvote: state.currentUser.username },
     });
-    //logic to change the style
-    const currentUserName = state.currentUser.username;
-    const containsUpvotedName = upvotedBy.includes(currentUserName);
-    if (containsUpvotedName) {
-      upvoteRef.current.classList.remove("marked");
-    } else {
-      upvoteRef.current.classList.add("marked");
-      downvoteRef.current.classList.remove("marked");
-    }
   };
 
   const handleDownvote = () => {
@@ -194,16 +185,29 @@ const Comment = ({ item }) => {
         currentUserNameDownvote: state.currentUser.username,
       },
     });
-    //logic to change the style
+  };
+
+  useEffect(() => {
+    //logic to change the style upvote
+    const currentUserName = state.currentUser.username;
+    const containsUpvotedName = upvotedBy.includes(currentUserName);
+    if (containsUpvotedName) {
+      upvoteRef.current.classList.add("marked");
+    } else {
+      upvoteRef.current.classList.remove("marked");
+    }
+  }, [state]);
+
+  useEffect(() => {
+    //logic to change the style downvote
     const currentUserName = state.currentUser.username;
     const containsDownvotedName = downvotedBy.includes(currentUserName);
     if (containsDownvotedName) {
-      downvoteRef.current.classList.remove("marked");
-    } else {
-      upvoteRef.current.classList.remove("marked");
       downvoteRef.current.classList.add("marked");
+    } else {
+      downvoteRef.current.classList.remove("marked");
     }
-  };
+  }, [state]);
 
   const handleOnChange = (e) => {
     setTextContent(e.target.value);

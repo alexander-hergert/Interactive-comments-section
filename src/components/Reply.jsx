@@ -166,7 +166,7 @@ const Reply = ({ item }) => {
     } else {
       setIsUser(false);
     }
-  }, []);
+  }, [state]);
 
   const handleToggle = () => {
     setIsReply(!isReply);
