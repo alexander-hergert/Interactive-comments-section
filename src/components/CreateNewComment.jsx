@@ -78,26 +78,34 @@ const CreateNewComment = () => {
   const { state, dispatch } = useGlobalContext();
   const [textContent, setTextContent] = useState("");
 
+  const fetchQuote = async () => {
+    const response = await fetch("https://api.adviceslip.com/advice");
+    const data = await response.json();
+    setTextContent(data.slip.advice);
+    return data.slip.advice;
+  };
+
   const handleOnChange = (e) => {
     setTextContent(e.target.value);
   };
 
   useEffect(() => {
-    const fetchQuote = async () => {
-      const response = await fetch("https://api.adviceslip.com/advice");
-      const data = await response.json();
-      setTextContent(data.slip.advice);
-    };
     fetchQuote();
   }, [state]);
 
   const handleCreateComment = async (e) => {
     e.preventDefault();
+    const inputText = e.target[0].value.trim();
 
-    if (!e.target[0].value) {
-      e.target[0].value = textContent;
+    //Input validation
+    if (!inputText || /^[\s\n]*$/.test(inputText)) {
+      const quote = await fetchQuote();
+      e.target[0].value = quote;
+    } else {
+      const sanitizedText = textContent.replace(/[\r\n]+/g, "\n");
+      setTextContent(sanitizedText);
     }
-    setTextContent(e.target[0].value);
+
     //creating the payload
     const userName = state.currentUser.username;
     const imageSrc = state.currentUser.image.png;

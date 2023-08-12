@@ -77,21 +77,28 @@ const ReplyForm = ({ commentId, handleToggle, replyingTo }) => {
   const { state, dispatch } = useGlobalContext();
   const [textContent, setTextContent] = useState("");
 
+  const fetchQuote = async () => {
+    const response = await fetch("https://api.adviceslip.com/advice");
+    const data = await response.json();
+    setTextContent(data.slip.advice);
+  };
+
   useEffect(() => {
-    const fetchQuote = async () => {
-      const response = await fetch("https://api.adviceslip.com/advice");
-      const data = await response.json();
-      setTextContent(data.slip.advice);
-    };
     fetchQuote();
   }, [state]);
 
-  const handleReply = (e) => {
+  const handleReply = async (e) => {
     e.preventDefault();
-    if (!e.target[0].value) {
-      e.target[0].value = textContent;
+    const inputText = e.target[0].value.trim();
+
+    //Input validation
+    if (!inputText || /^[\s\n]*$/.test(inputText)) {
+      const quote = await fetchQuote();
+      e.target[0].value = quote;
+    } else {
+      const sanitizedText = textContent.replace(/[\r\n]+/g, "\n");
+      setTextContent(sanitizedText);
     }
-    setTextContent(e.target[0].value);
     //creating the payload
     const newId = nanoid();
     const newContent = e.target[0].value;
