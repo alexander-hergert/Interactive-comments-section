@@ -87,6 +87,7 @@ const CommentStyles = styled.section`
     p {
       color: hsl(211, 10%, 45%);
       line-height: 1.5;
+      hyphens: auto;
     }
     button {
       background-color: hsl(238, 40%, 52%);
@@ -144,6 +145,7 @@ const Toggler = styled.div`
   margin: auto;
   cursor: pointer;
   font-size: 2rem;
+  margin-bottom: -1rem;
 `;
 
 /***************** COMPONENT ******************/

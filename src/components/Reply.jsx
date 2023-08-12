@@ -83,6 +83,7 @@ const ReplyStyles = styled.div`
     p {
       color: hsl(211, 10%, 45%);
       line-height: 1.5;
+      hyphens: auto;
     }
     button {
       background-color: hsl(238, 40%, 52%);

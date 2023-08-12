@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { styled } from "styled-components";
-import { useGlobalContext } from "../context";
 import { users } from "../users";
 import SwitchUser from "./SwitchUser";
 
@@ -11,7 +10,7 @@ const Styles = styled.section`
   margin-bottom: 2rem;
   gap: 2rem;
   text-align: center;
-  color: white;
+  color: black;
   //DESKTOP
   @media only screen and (min-width: 800px) {
   }

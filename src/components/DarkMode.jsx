@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 
-const Styles = styled.div`
+const Styles = styled.section`
   font-size: 3rem;
   cursor: pointer;
   width: 3rem;

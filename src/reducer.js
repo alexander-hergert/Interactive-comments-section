@@ -252,6 +252,10 @@ export const reducer = (state, action) => {
           });
         }
       });
+      saveLocalData({
+        ...state,
+        comments: newEditComments,
+      });
       return {
         ...state,
         comments: newEditComments,

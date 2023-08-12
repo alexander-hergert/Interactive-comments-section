@@ -6,6 +6,7 @@ import { useGlobalContext } from "../context";
 /***************** STYLES ******************/
 const CommentsStyles = styled.section`
   background-color: hsl(228, 33%, 97%);
+  transition: all 1s;
 
   @media only screen and (min-width: 800px) {
     width: 60%;

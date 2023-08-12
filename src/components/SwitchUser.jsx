@@ -5,6 +5,21 @@ import { useGlobalContext } from "../context";
 /***************** STYLES ******************/
 const Styles = styled.div`
   cursor: pointer;
+  p {
+    width: 6rem;
+  }
+
+  &:hover {
+    img {
+      box-shadow: 0 0 20px hsl(357, 100%, 86%);
+      border-radius: 50%;
+    }
+
+    p {
+      font-weight: bold;
+      color: hsl(357, 100%, 86%);
+    }
+  }
 
   &.selected-user {
     img {
@@ -69,7 +84,9 @@ const SwitchUser = ({ user, isDarkMode }) => {
     const currentUserName = state.currentUser?.username;
     if (isDarkMode && currentUserName === username) {
       ref.current.classList.add("selected-user-dark");
-    } else {
+      ref.current.classList.remove("selected-user");
+    } else if (!isDarkMode && currentUserName === username) {
+      ref.current.classList.add("selected-user");
       ref.current.classList.remove("selected-user-dark");
     }
   }, [isDarkMode]);
